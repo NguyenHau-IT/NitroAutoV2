@@ -40,18 +40,19 @@ class AuthController extends BaseController
             $password = $_POST["password"];
             $phone = $_POST["phone"];
             $address = $_POST["address"];
+            $gender = $_POST["gender"];
 
             if (Users::findByEmail($email)) {
                 header("Location: /auth?status=error&message=" . urlencode("Email đã tồn tại!"));
                 exit();
             }
 
-            if (Users::findByPhone($phone)) {
+            if (Users::isPhoneRegistered($phone)) {
                 header("Location: /auth?status=error&message=" . urlencode("Số điện thoại đã tồn tại!"));
                 exit();
             }
 
-            if (Users::register($name, $email, $password, $phone, $address)) {
+            if (Users::register($name, $email, $password, $phone, $address, $gender)) {
                 header("Location: /auth?status=success&message=" . urlencode("Đăng ký thành công!"));
             } else {
                 header("Location: /auth?status=error&message=" . urlencode("Đăng ký thất bại!"));
@@ -140,7 +141,7 @@ class AuthController extends BaseController
                 $password = '123456nvh@Aa';
                 $phone = '0' . str_pad(random_int(0, 999999999), 9, '0', STR_PAD_LEFT);
                 $address = 'null';
-                $gender ='male';
+                $gender = 'male';
 
                 $newUserId = Users::register($userInfo->name, $userInfo->email, $password, $phone, $address, $gender);
                 if (!$newUserId) throw new Exception("Không thể tạo user mới");
@@ -153,10 +154,12 @@ class AuthController extends BaseController
             $_SESSION['user_id'] = $user['id'];
 
             if (empty($_SESSION['__session_logged'])) {
-                file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/session_log.txt',
+                file_put_contents(
+                    $_SERVER['DOCUMENT_ROOT'] . '/session_log.txt',
                     "[" . date('Y-m-d H:i:s') . "] Google Login Session:\nuser_id: " . $_SESSION['user_id'] . "\n" .
-                    "user: " . print_r($_SESSION['user'], true) . "\n",
-                    FILE_APPEND);
+                        "user: " . print_r($_SESSION['user'], true) . "\n",
+                    FILE_APPEND
+                );
                 $_SESSION['__session_logged'] = true;
             }
 
@@ -166,7 +169,6 @@ class AuthController extends BaseController
                 header("Location: /home?status=success&message=" . urlencode("Đăng nhập thành công"));
             }
             exit();
-
         } catch (Exception $e) {
             echo "DEBUG: " . $e->getMessage();
             exit();

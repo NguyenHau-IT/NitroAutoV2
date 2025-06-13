@@ -21,7 +21,7 @@ class UsedCarsController extends BaseController
     public function showUsedCar($id)
     {
         $used_car = Used_cars::find($id);
-$used_cars = Used_cars::getByid($id);
+        $used_cars = Used_cars::getByid($id);
         if (!$used_car) {
             header("Location: /home?status=error&message=" . urlencode("Bài đăng không tồn tại!"));
             exit();

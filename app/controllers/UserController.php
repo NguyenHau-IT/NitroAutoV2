@@ -32,33 +32,33 @@ class UserController extends BaseController
     }
 
     public function updateProfile()
-{
-    $this->requireLogin();
-    $id = $_SESSION["user"]["id"];
+    {
+        $this->requireLogin();
+        $id = $_SESSION["user"]["id"];
 
-    $full_name = $_POST['full_name'] ?? '';
-    $email     = $_POST['email'] ?? '';
-    $phone     = $_POST['phone'] ?? '';
-    $address   = $_POST['address'] ?? '';
-    $gender    = $_POST['gender'] ?? '';
+        $full_name = $_POST['full_name'] ?? '';
+        $email     = $_POST['email'] ?? '';
+        $phone     = $_POST['phone'] ?? '';
+        $address   = $_POST['address'] ?? '';
+        $gender    = $_POST['gender'] ?? '';
 
-    if (!$full_name || !$email || !$phone || !$address || $gender === '') {
-        $this->redirectWithMessage("/edit_profile", "error", "Vui lòng điền đầy đủ thông tin!");
-    }
-    
-    // Kiểm tra xem số điện thoại đã được đăng ký cho một người dùng khác chưa
-    if (Users::isPhoneRegistered($phone) && Users::getUserIdByPhone($phone) !== $id) {
-        $this->redirectWithMessage("/profile", "warning", "Số điện thoại đã được sử dụng!");
-    }
+        if (!$full_name || !$email || !$phone || !$address || $gender === '') {
+            $this->redirectWithMessage("/edit_profile", "error", "Vui lòng điền đầy đủ thông tin!");
+        }
 
-    // Cập nhật thông tin người dùng
-    if (Users::update($id, $full_name, $email, $phone, $address, $gender)) {
-        $_SESSION['user'] = Users::find($id);
-        $this->redirectWithMessage("/profile", "success", "Cập nhật thông tin thành công!");
-    } else {
-        $this->redirectWithMessage("/profile", "error", "Cập nhật thông tin thất bại!");
+        // Kiểm tra xem số điện thoại đã được đăng ký cho một người dùng khác chưa
+        if (Users::isPhoneRegistered($phone) && Users::getUserIdByPhone($phone) !== $id) {
+            $this->redirectWithMessage("/profile", "warning", "Số điện thoại đã được sử dụng!");
+        }
+
+        // Cập nhật thông tin người dùng
+        if (Users::update($id, $full_name, $email, $phone, $address, $gender)) {
+            $_SESSION['user'] = Users::find($id);
+            $this->redirectWithMessage("/profile", "success", "Cập nhật thông tin thành công!");
+        } else {
+            $this->redirectWithMessage("/profile", "error", "Cập nhật thông tin thất bại!");
+        }
     }
-}
 
     public function addUser()
     {
