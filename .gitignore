@@ -1,0 +1,32 @@
+# Thư mục Node.js
+node_modules/
+
+# Composer dependencies
+/vendor/
+
+# Biến môi trường
+.env
+
+# VSCode config
+.vscode/
+
+# Log files
+*.log
+session_log.txt
+
+# File tạm, sao lưu
+*.bak
+*.tmp
+
+# IDE/Editor
+.idea/
+*.iml
+
+# Cache và tệp hệ thống
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Tệp upload nếu không muốn track
+uploads/
