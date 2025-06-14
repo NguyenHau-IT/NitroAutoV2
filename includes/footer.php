@@ -1,31 +1,46 @@
-<footer class="z-1" style="background-color: #0d6efd; color: white; padding: 1.5rem 0; text-align: center;">
+<footer class="z-1" style="background-color: #0d6efd; color: white; padding: 2rem 0; text-align: center;">
     <div class="container">
-        <!-- Thông tin liên hệ -->
-        <p class="mb-1" style="font-size: 16px;">
-            &copy; <?= date("Y"); ?> <strong>Nitro Auto</strong>. All rights reserved.
-        </p>
-        <p class="mb-2" style="font-size: 15px;">
-            Địa chỉ: 123 Đường Tốc Độ, Quận Tăng Tốc, TP. Hồ Chí Minh<br>
-            Email: <a href="mailto:contact@nitroauto.vn" class="text-white text-decoration-underline">contact@nitroauto.vn</a><br>
-            Điện thoại: <a href="tel:+84987654321" class="text-white text-decoration-underline">(+84) 987 654 321</a>
-        </p>
+        <div class="row text-start text-md-start">
+            <!-- Cột 1: Thông tin liên hệ -->
+            <div class="col-md-6 mb-2 mb-md-0">
+                <h6 class="fw-bold mb-2">Thông tin liên hệ</h6>
+                <p class="mb-1" style="font-size: 15px;">
+                    &copy; <?= date("Y"); ?> <strong>Nitro Auto</strong>. All rights reserved.
+                </p>
+                <p style="font-size: 15px;">
+                    Địa chỉ: 123 Đường Tốc Độ, Quận Tăng Tốc, TP. Hồ Chí Minh<br>
+                    Email: <a href="mailto:contact@nitroauto.vn" class="text-white text-decoration-underline">contact@nitroauto.vn</a><br>
+                    Điện thoại: <a href="tel:+84987654321" class="text-white text-decoration-underline">(+84) 987 654 321</a>
+                </p>
+            </div>
 
-        <!-- Mạng xã hội -->
-        <p style="font-size: 15px;">
-            Kết nối với chúng tôi:
-            <a href="#" class="text-white text-decoration-none ms-2 me-2">
-                <i class="fab fa-facebook-f"></i> Facebook
-            </a>
-            <a href="#" class="text-white text-decoration-none me-2">
-                <i class="fab fa-youtube"></i> YouTube
-            </a>
-            <a href="#" class="text-white text-decoration-none me-2">
-                <i class="fab fa-instagram"></i> Instagram
-            </a>
-            <a href="#" class="text-white text-decoration-none">
-                <i class="fab fa-tiktok"></i> TikTok
-            </a>
-        </p>
+            <!-- Cột 2: Mạng xã hội -->
+            <div class="col-md-6 text-start text-md-end">
+                <h6 class="fw-bold mb-2">Kết nối với chúng tôi</h6>
+                <ul class="list-unstyled mb-0" style="font-size: 15px;">
+                    <li class="mb-1">
+                        <a href="#" class="text-white text-decoration-none">
+                            <i class="fab fa-facebook-f me-2"></i>Facebook
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="#" class="text-white text-decoration-none">
+                            <i class="fab fa-youtube me-2"></i>YouTube
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="#" class="text-white text-decoration-none">
+                            <i class="fab fa-instagram me-2"></i>Instagram
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white text-decoration-none">
+                            <i class="fab fa-tiktok me-2"></i>TikTok
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </footer>
 

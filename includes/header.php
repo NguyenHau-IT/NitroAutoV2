@@ -35,7 +35,7 @@ $count_cart = Cart::getCartCount($user_id ?? null);
 
 <body>
     <header class="text-center bg-nitro-gradient">
-        <nav class="navbar navbar-expand-lg navbar-light py-3">
+        <nav class="navbar navbar-expand-lg navbar-light py-4">
             <div class="container">
                 <!-- Logo -->
                 <a class="navbar-brand" href="/home">
