@@ -1,4 +1,4 @@
-<footer class="z-1" style="background-color: #0d6efd; color: white; padding: 2rem 0; text-align: center;">
+<footer class="z-3">
     <div class="container">
         <div class="row text-start text-md-start">
             <!-- Cột 1: Thông tin liên hệ -->
