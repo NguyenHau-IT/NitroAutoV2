@@ -1,18 +1,20 @@
-<div class="mt-4 bg-light rounded-4 shadow p-4 border">
+<div class="mt-4 bg-light rounded-4 shadow p-4 border z-0">
     <?php if (!empty($cars)): ?>
-        <div class="row g-4 justify-content-center">
+        <div class="row g-4 justify-content-center" id="car-list-container">
             <?php foreach ($cars as $index => $car): ?>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 car-item <?= $index >= 8 ? 'd-none' : '' ?>">
                     <div class="card car-card p-0 h-100 shadow-lg rounded-3 overflow-hidden">
                         <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>" class="car-img-container">
-                            <img loading="lazy" src="<?= htmlspecialchars(!empty($car["normal_image_url"]) ? $car["normal_image_url"] : '/public/uploads/cars/default.jpg') ?>"
-                                 class="card-img-top car-image"
-                                 alt="<?= htmlspecialchars($car['name']) ?>"
-                                 style="height: 200px; object-fit: cover; transition: transform 0.3s ease-in-out;">
+                            <img loading="lazy"
+                                src="<?= htmlspecialchars($car["normal_image_url"] ?? '/public/uploads/cars/default.jpg') ?>"
+                                class="card-img-top car-image"
+                                alt="<?= htmlspecialchars($car['name']) ?>"
+                                style="height: 200px; object-fit: cover;">
                         </a>
                         <div class="card-body text-center bg-dark text-light">
                             <h5 class="card-title fw-bold mb-3" style="height: 60px;">
-                                <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>" class="text-decoration-none text-light">
+                                <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>"
+                                    class="text-decoration-none text-light">
                                     <?= htmlspecialchars($car['name']) ?>
                                 </a>
                             </h5>
@@ -20,11 +22,12 @@
                                 <i class="fas fa-money-bill-wave me-1"></i>
                                 <?= number_format($car['price'], 0, ',', '.') ?> VNĐ
                             </p>
-                            <p class="card-text text-light">
+                            <p class="card-text">
                                 <i class="fas fa-gas-pump"></i> <?= htmlspecialchars($car['fuel_type']) ?> |
                                 <i class="fas fa-car"></i> <?= htmlspecialchars($car['category_name']) ?>
                             </p>
                             <div class="row mt-3 g-3">
+                                <!-- Nút đặt mua -->
                                 <div class="col-md-6">
                                     <?php if ($car['stock'] > 0): ?>
                                         <form action="/OrderForm" method="POST">
@@ -39,6 +42,7 @@
                                         </div>
                                     <?php endif; ?>
                                 </div>
+                                <!-- Nút so sánh -->
                                 <div class="col-md-6">
                                     <form action="/compare" method="POST">
                                         <input type="hidden" name="car_id" value="<?= htmlspecialchars($car['id']) ?>">
@@ -54,6 +58,7 @@
             <?php endforeach; ?>
         </div>
 
+        <!-- Nút xem thêm & thu gọn -->
         <?php if (count($cars) > 8): ?>
             <div class="text-center mt-5 pt-2 d-flex justify-content-center gap-2">
                 <button id="loadMoreCars" class="btn btn-primary d-flex align-items-center">
@@ -71,41 +76,47 @@
     <?php endif; ?>
 </div>
 
+<!-- Script xử lý hiển thị -->
 <script>
-    const loadMoreBtn = document.getElementById('loadMoreCars');
-    const collapseBtn = document.getElementById('collapseCars');
-    const carItems = document.querySelectorAll('.car-item');
-    const batchSize = 8;
-    let visibleCount = batchSize;
+    document.addEventListener("DOMContentLoaded", function() {
+        const loadMoreBtn = document.getElementById('loadMoreCars');
+        const collapseBtn = document.getElementById('collapseCars');
+        const carItems = document.querySelectorAll('.car-item');
+        const batchSize = 8;
+        let visibleCount = batchSize;
 
-    function updateVisibility() {
-        carItems.forEach((item, index) => {
-            if (index < visibleCount) {
-                item.classList.remove('d-none');
-            } else {
-                item.classList.add('d-none');
-            }
-        });
-    }
+        function updateVisibility() {
+            carItems.forEach((item, index) => {
+                item.classList.toggle('d-none', index >= visibleCount);
+            });
+        }
 
-    if (loadMoreBtn && collapseBtn) {
-        loadMoreBtn.addEventListener('click', function () {
-            visibleCount += batchSize;
-            if (visibleCount >= carItems.length) {
-                visibleCount = carItems.length;
-                loadMoreBtn.classList.add('d-none');
-            }
-            updateVisibility();
-            collapseBtn.classList.remove('d-none');
-        });
+        if (loadMoreBtn && collapseBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                visibleCount += batchSize;
+                if (visibleCount >= carItems.length) {
+                    visibleCount = carItems.length;
+                    loadMoreBtn.classList.add('d-none');
+                }
+                updateVisibility();
+                collapseBtn.classList.remove('d-none');
+            });
 
-        collapseBtn.addEventListener('click', function () {
-            visibleCount = batchSize;
-            updateVisibility();
-            loadMoreBtn.classList.remove('d-none');
-            collapseBtn.classList.add('d-none');
-            // Optional: scroll to top of car list
-            window.scrollTo({ top: document.querySelector('.car-item').offsetTop - 100, behavior: 'smooth' });
-        });
-    }
+            collapseBtn.addEventListener('click', () => {
+                visibleCount = batchSize;
+                updateVisibility();
+                loadMoreBtn.classList.remove('d-none');
+                collapseBtn.classList.add('d-none');
+
+                // Scroll to top of car list (optional)
+                const firstCar = document.querySelector('.car-item');
+                if (firstCar) {
+                    window.scrollTo({
+                        top: firstCar.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
+    });
 </script>

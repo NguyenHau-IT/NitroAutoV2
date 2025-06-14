@@ -169,4 +169,22 @@ document.addEventListener("DOMContentLoaded", function () {
             bannerRight.style.setProperty('display', 'none', 'important');
         });
     }
+
+    const searchForm = document.getElementById("search-form");
+    if (searchForm) {
+        searchForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formData = new FormData(searchForm);
+            fetch("/filter-cars", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    const carList = document.getElementById("car-list-container");
+                    if (carList) carList.innerHTML = data;
+                })
+                .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
+        });
+    }
 });
