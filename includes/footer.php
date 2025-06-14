@@ -41,6 +41,7 @@ require_once 'app/views/chat/chat_view.php'
 <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
 <script src="https://code.tidio.co/6mwc7mwnavuskqrzogvzunvkydduvnet.js" async></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="/script.js" defer></script>
 
 </body>

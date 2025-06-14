@@ -29,6 +29,8 @@ $count_cart = Cart::getCartCount($user_id ?? null);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 </head>
 
 <body>
@@ -99,7 +101,7 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                                     <div class="position-relative">
                                         <i class="fas fa-shopping-cart fa-lg"></i>
                                         <?php if ($count_cart > 0): ?>
-                                            <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
+                                            <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
                                                 <?= $count_cart ?>
                                             </span>
                                         <?php endif; ?>
