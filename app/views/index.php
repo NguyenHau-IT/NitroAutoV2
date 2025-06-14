@@ -6,13 +6,8 @@
     <?php require_once 'app/views/slice-bar/slider.php'; ?>
 </div>
 
-<!-- Banner hai bên (nếu cần) -->
-<?php require_once 'app/views/slice-bar/left_right.php'; ?>
-
 <!-- Overlay nội dung nằm giữa slider -->
 <main class="position-relative z-2" style="min-height: 100vh;">
-    <!-- Banner cố định 2 bên -->
-    <?php require_once 'app/views/slice-bar/left_right.php'; ?>
 
     <!-- Overlay nội dung -->
     <div class="overlay d-flex align-items-center justify-content-center text-white text-center px-3" style="min-height: 100vh;">

@@ -38,7 +38,7 @@ $count_cart = Cart::getCartCount($user_id ?? null);
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <!-- Logo -->
-                <a class="navbar-brand" href="/home">
+                <a class="navbar-brand" href="/">
                     <img src="/uploads/logo-white.png" alt="logo" width="120">
                 </a>
 
@@ -53,11 +53,12 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                     <ul class="navbar-nav me-auto d-flex gap-3 align-items-center">
                         <!-- Logo bên trái -->
 
-                        <li class="nav-item dropdown <?= in_array($current_page, ['product_list', 'accessories', 'services', 'favorites', 'appointments', 'user_orders', 'test_drive']) ? 'active' : '' ?>">
+                        <li class="nav-item dropdown <?= in_array($current_page, ['home', 'accessories', 'services', 'favorites', 'appointments', 'user_orders', 'test_drive']) ? 'active' : '' ?>">
                             <a class="nav-link dropdown-toggle" href="#" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-list"></i><span> Danh mục</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="productDropdown">
+                                <li><a class="dropdown-item" href="/home"><i class="fas fa-car me-2"></i>Danh sách xe</a></li>
                                 <li><a class="dropdown-item" href="/accessories"><i class="fas fa-tools me-2"></i>Phụ Kiện cho xe</a></li>
                                 <li><a class="dropdown-item" href="/services"><i class="fas fa-toolbox me-2"></i>Dịch vụ</a></li>
                                 <li>
@@ -122,11 +123,11 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                             </li>
                         <?php endif; ?>
 
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <button id="toggle-theme" class="btn btn-outline-dark" title="Đổi chế độ sáng/tối">
                                 <i class="bi bi-moon-fill"></i>
                             </button>
-                        </li> -->
+                        </li>
                     </ul>
                 </div>
             </div>

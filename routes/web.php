@@ -33,8 +33,11 @@ $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 switch (true) {
 
     // === HOME ===
-    case ($uri === '' || $uri === 'home'):
+    case ($uri === ''):
         (new HomeController())->index();
+        break;
+    case ($uri === 'home'):
+        (new HomeController())->home();
         break;
 
     // === ADMIN ===

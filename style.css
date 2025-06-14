@@ -288,21 +288,34 @@ footer {
     height: 100%;
 }
 
+#custom-banner-wrapper {
+    max-width: 100%;
+}
+
+.customBannerSwiper .swiper-slide img {
+    border-radius: 0.5rem;
+}
+
+.swiper{
+    position: relative;
+    width: 100%;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (min-width: 992px) {
-    #carouselExampleIndicators {
+    .swiper{
         height: 40rem;
     }
 }
 
 @media (min-width: 576px) and (max-width: 991.98px) {
-    #carouselExampleIndicators {
+    .swiper{
         height: 25rem;
     }
 }
 
 @media (max-width: 575.98px) {
-    #carouselExampleIndicators {
+    .swiper{
         height: 17.5rem;
     }
 }

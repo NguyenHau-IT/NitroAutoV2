@@ -1,39 +1,44 @@
 console.log("✅ script.js loaded");
 
+// DARK MODE TOGGLE
 const toggleBtn = document.getElementById('toggle-theme');
-const icon = toggleBtn.querySelector('i');
+if (toggleBtn) {
+    const icon = toggleBtn.querySelector('i');
 
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme === 'dark') {
-    enableDarkMode();
-}
-
-toggleBtn.addEventListener('click', () => {
-    if (document.body.classList.contains('bg-dark')) {
-        disableDarkMode();
-    } else {
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
         enableDarkMode();
     }
-});
 
-function enableDarkMode() {
-    document.body.classList.add('bg-dark', 'text-white');
-    toggleBtn.classList.remove('btn-outline-dark');
-    toggleBtn.classList.add('btn-outline-light');
-    icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-    localStorage.setItem('theme', 'dark');
+    toggleBtn.addEventListener('click', () => {
+        if (document.body.classList.contains('bg-dark')) {
+            disableDarkMode();
+        } else {
+            enableDarkMode();
+        }
+    });
+
+    function enableDarkMode() {
+        document.body.classList.add('bg-dark', 'text-white');
+        toggleBtn.classList.remove('btn-outline-dark');
+        toggleBtn.classList.add('btn-outline-light');
+        icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+        localStorage.setItem('theme', 'dark');
+    }
+
+    function disableDarkMode() {
+        document.body.classList.remove('bg-dark', 'text-white');
+        toggleBtn.classList.remove('btn-outline-light');
+        toggleBtn.classList.add('btn-outline-dark');
+        icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+        localStorage.setItem('theme', 'light');
+    }
 }
 
-function disableDarkMode() {
-    document.body.classList.remove('bg-dark', 'text-white');
-    toggleBtn.classList.remove('btn-outline-light');
-    toggleBtn.classList.add('btn-outline-dark');
-    icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
-    localStorage.setItem('theme', 'light');
-}
-
+// KHI DOM SẴN SÀNG
 document.addEventListener("DOMContentLoaded", function () {
 
+    // Đăng xuất với SweetAlert
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function (e) {
@@ -55,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Hiển thị thông báo trạng thái từ URL
     const params = new URLSearchParams(window.location.search);
     const status = params.get("status");
     const message = params.get("message");
@@ -86,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Checkbox "chọn tất cả"
     const selectAll = document.getElementById("select-all");
     const checkboxes = document.querySelectorAll(".select-item");
 
@@ -95,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Cập nhật số lượng trong giỏ
     const quantityInputs = document.querySelectorAll(".quantity-input");
 
     quantityInputs.forEach(input => {
@@ -129,31 +137,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    if (document.getElementById('cart-count')) {
+    // Hiển thị số lượng giỏ hàng
+    const cartCountEl = document.getElementById('cart-count');
+    if (cartCountEl) {
         fetch('/countCart')
             .then(response => response.json())
             .then(data => {
-                const badge = document.getElementById('cart-count');
                 if (data.count > 0) {
-                    badge.textContent = data.count;
-                    badge.style.display = 'inline-block';
+                    cartCountEl.textContent = data.count;
+                    cartCountEl.style.display = 'inline-block';
                 } else {
-                    badge.style.display = 'none';
+                    cartCountEl.style.display = 'none';
                 }
             });
     }
 
-    // ✅ THÊM CHỨC NĂNG ẨN BANNER KHI BẤM NÚT
-    // Ẩn banner chính bạn đã có
-    const hideBannerBtn = document.getElementById('hide-banner-btn');
-    const bannerContainer = document.getElementById('banner-container');
-    if (hideBannerBtn && bannerContainer) {
-        hideBannerBtn.addEventListener('click', () => {
-            bannerContainer.style.display = 'none';
+    // Ẩn banner chính
+    const closeBtn = document.getElementById('custom-banner-close-btn');
+    const bannerWrapper = document.getElementById('custom-banner-wrapper');
+
+    if (closeBtn && bannerWrapper) {
+        closeBtn.addEventListener('click', () => {
+            bannerWrapper.style.display = 'none';
         });
     }
 
-    // Ẩn banner trái
+    // Ẩn banner trái/phải nếu có
     const hideBannerLeftBtn = document.getElementById('hide-banner-left-btn');
     const bannerLeft = document.getElementById('banner-left');
     if (hideBannerLeftBtn && bannerLeft) {
@@ -170,6 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Gửi form tìm kiếm bộ lọc
     const searchForm = document.getElementById("search-form");
     if (searchForm) {
         searchForm.addEventListener("submit", function (event) {
@@ -188,13 +198,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const swiper = new Swiper(".mySwiper", {
-        effect: "fade", // hoặc "slide"
-        fadeEffect: { crossFade: true },
-        loop: true,
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-        },
-    });
+    // Swiper: mySwiper (slider nền hoặc ảnh nổi)
+    const swiperEl = document.querySelector(".mySwiper");
+    if (swiperEl) {
+        new Swiper(swiperEl, {
+            effect: "fade",
+            fadeEffect: { crossFade: true },
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+        });
+    }
+
+    // Swiper: customBannerSwiper (nếu có slider phụ)
+    const customSwiperEl = document.querySelector(".customBannerSwiper");
+    if (customSwiperEl) {
+        new Swiper(customSwiperEl, {
+            effect: "slide",
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+        });
+    }
 });

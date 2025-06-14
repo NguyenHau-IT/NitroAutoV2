@@ -9,7 +9,7 @@
         <?php require_once 'app/views/cars/history_view_car.php'; ?>
 
         <!-- Slider -->
-        <?php require_once 'app/views/slice-bar/slider.php'; ?>
+        <?php require_once 'app/views/slice-bar/banner.php'; ?>
 
         <!-- Bộ lọc và ô tìm kiếm -->
         <?php require_once 'app/views/cars/filter.php'; ?>

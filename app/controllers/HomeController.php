@@ -19,6 +19,12 @@ class HomeController extends BaseController
 
     public function index()
     {
+        $banners = Banner::getAllBanners();
+        require_once 'app/views/index.php';
+    }
+
+    public function home()
+    {
         $user_id = $_SESSION['user']['id'] ?? null;
 
         $cars = Cars::all();
@@ -31,6 +37,6 @@ class HomeController extends BaseController
         $used_cars = Used_cars::all();
         $newsList = News::getNews();
 
-        require_once 'app/views/index.php';
+        require_once 'app/views/home/index.php';
     }
 }

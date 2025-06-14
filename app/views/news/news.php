@@ -1,4 +1,4 @@
-<div class="mt-4 bg-white rounded-4 shadow p-4 border border-primary-subtle">
+<div class="my-4 bg-white rounded-4 p-4 shadow border border-primary-subtle">
     <h3 class="text-primary mb-4 text-start">
         <i class="bi bi-newspaper me-2"></i> Tin tức
     </h3>
