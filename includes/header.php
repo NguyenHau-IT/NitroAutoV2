@@ -79,7 +79,7 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                     <form action="" method="POST" id="search-form" class="d-flex flex-grow-1 mx-3" style="min-width: 250px; max-width: 600px;">
                         <div class="input-group w-100">
                             <input type="text" name="search" class="form-control rounded-start-pill border-end-0"
-                                placeholder="Tìm kiếm xe..."
+                                placeholder="Bạn đang tìm kiếm xe gì..."
                                 value="<?= @htmlspecialchars($_POST['search'] ?? '') ?>">
                             <button class="btn btn-outline-secondary rounded-end-pill border-start-0" type="submit">
                                 <i class="fas fa-search"></i>
@@ -122,11 +122,11 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                             </li>
                         <?php endif; ?>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <button id="toggle-theme" class="btn btn-outline-dark" title="Đổi chế độ sáng/tối">
                                 <i class="bi bi-moon-fill"></i>
                             </button>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

@@ -115,6 +115,9 @@ footer {
 }
 
 /* ===== NAVBAR & DROPDOWNS ===== */
+.navbar {
+    height: 15vh;
+}
 .navbar-nav .nav-link {
     transition: all 0.3s ease-in-out;
     border-radius: 5px;
