@@ -1,57 +1,52 @@
 <div class="mt-4 bg-light rounded-4 shadow p-4 border z-0">
     <?php if (!empty($cars)): ?>
-        <div class="row g-4" id="car-list-container">
+        <div class="row g-4 justify-content-center" id="car-list-container">
             <?php foreach ($cars as $index => $car): ?>
-                <div class="col-12 col-lg-6 car-item <?= $index >= 8 ? 'd-none' : '' ?>">
-                    <div class="card car-card shadow-lg rounded-3 overflow-hidden d-flex flex-row flex-wrap h-100">
-                        <!-- Ảnh -->
-                        <div class="car-img-container" style="flex: 1 1 40%; min-width: 220px;">
-                            <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>">
-                                <img loading="lazy"
-                                    src="<?= htmlspecialchars($car["normal_image_url"] ?? '/public/uploads/cars/default.jpg') ?>"
-                                    alt="<?= htmlspecialchars($car['name']) ?>"
-                                    class="w-100 h-100 object-fit-cover"
-                                    style="object-fit: cover; height: 100%; max-height: 200px;">
-                            </a>
-                        </div>
-
-                        <!-- Nội dung -->
-                        <div class="card-body bg-dark text-light d-flex flex-column justify-content-between" style="flex: 1 1 60%;">
-                            <div class="text-center text-lg-start">
-                                <h5 class="card-title fw-bold mb-2" style="min-height: 40px;">
-                                    <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>" class="text-decoration-none text-light">
-                                        <?= htmlspecialchars($car['name']) ?>
-                                    </a>
-                                </h5>
-                                <p class="card-text fw-bold mb-2">
-                                    <i class="fas fa-money-bill-wave me-1"></i>
-                                    <?= number_format($car['price'], 0, ',', '.') ?> VNĐ
-                                </p>
-                                <p class="card-text small mb-2">
-                                    <i class="fas fa-gas-pump me-1"></i> <?= htmlspecialchars($car['fuel_type']) ?> |
-                                    <i class="fas fa-car me-1"></i> <?= htmlspecialchars($car['category_name']) ?>
-                                </p>
-                            </div>
-
-                            <div class="row mt-3 g-2">
-                                <div class="col-6">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 car-item <?= $index >= 8 ? 'd-none' : '' ?>">
+                    <div class="card car-card p-0 h-100 shadow-lg rounded-3 overflow-hidden">
+                        <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>" class="car-img-container">
+                            <img loading="lazy"
+                                src="<?= htmlspecialchars($car["normal_image_url"] ?? '/public/uploads/cars/default.jpg') ?>"
+                                class="card-img-top car-image"
+                                alt="<?= htmlspecialchars($car['name']) ?>"
+                                style="height: 200px; object-fit: cover;">
+                        </a>
+                        <div class="card-body text-center bg-dark text-light">
+                            <h5 class="card-title fw-bold mb-3" style="height: 60px;">
+                                <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>"
+                                    class="text-decoration-none text-light">
+                                    <?= htmlspecialchars($car['name']) ?>
+                                </a>
+                            </h5>
+                            <p class="card-text fw-bold">
+                                <i class="fas fa-money-bill-wave me-1"></i>
+                                <?= number_format($car['price'], 0, ',', '.') ?> VNĐ
+                            </p>
+                            <p class="card-text">
+                                <i class="fas fa-gas-pump"></i> <?= htmlspecialchars($car['fuel_type']) ?> |
+                                <i class="fas fa-car"></i> <?= htmlspecialchars($car['category_name']) ?>
+                            </p>
+                            <div class="row mt-3 g-3">
+                                <!-- Nút đặt mua -->
+                                <div class="col-md-6">
                                     <?php if ($car['stock'] > 0): ?>
                                         <form action="/OrderForm" method="POST">
-                                            <input type="hidden" name="car_id" value="<?= htmlspecialchars($car['id']) ?>">
-                                            <button type="submit" class="btn btn-success w-100 d-flex align-items-center justify-content-center px-2 py-2">
+                                            <input type="hidden" name="car_id" value="<?= htmlspecialchars($car['id']); ?>">
+                                            <button type="submit" class="btn btn-success w-100 d-flex align-items-center justify-content-center shadow-sm rounded-3 hover-scale px-4 py-2">
                                                 <i class="fas fa-shopping-cart me-2"></i> <span>Đặt mua</span>
                                             </button>
                                         </form>
                                     <?php else: ?>
-                                        <div class="text-danger fw-semibold text-center small">
-                                            <i class="fas fa-truck-loading me-1"></i> Đang nhập hàng
+                                        <div class="text-danger fw-semibold text-center mt-2">
+                                            <i class="fas fa-truck-loading me-1"></i> Xe hiện đang nhập hàng
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                                <div class="col-6">
+                                <!-- Nút so sánh -->
+                                <div class="col-md-6">
                                     <form action="/compare" method="POST">
                                         <input type="hidden" name="car_id" value="<?= htmlspecialchars($car['id']) ?>">
-                                        <button type="submit" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center px-2 py-2">
+                                        <button type="submit" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center shadow-sm rounded-3 hover-scale px-4 py-2">
                                             <i class="fas fa-plus-circle me-2"></i> <span>So sánh</span>
                                         </button>
                                     </form>
@@ -63,7 +58,7 @@
             <?php endforeach; ?>
         </div>
 
-        <!-- Xem thêm / Thu gọn -->
+        <!-- Nút xem thêm & thu gọn -->
         <?php if (count($cars) > 8): ?>
             <div class="text-center mt-5 pt-2 d-flex justify-content-center gap-2">
                 <button id="loadMoreCars" class="btn btn-primary d-flex align-items-center">

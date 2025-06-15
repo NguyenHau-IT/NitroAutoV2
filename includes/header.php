@@ -82,11 +82,11 @@ $count_cart = Cart::getCartCount($user_id ?? null);
 
                     <!-- Search form giữa navbar -->
                     <form action="" method="POST" id="search-form" class="d-flex flex-grow-1 mx-3" style="min-width: 250px; max-width: 600px;">
-                        <div class="input-group w-100">
-                            <input type="text" name="search" class="form-control rounded-start-pill border-end-0"
+                        <div class="input-group w-100 border border-secondary rounded-pill overflow-hidden">
+                            <input type="text" name="search" class="form-control border-0"
                                 placeholder="Bạn đang tìm kiếm xe gì..."
                                 value="<?= @htmlspecialchars($_POST['search'] ?? '') ?>">
-                            <button class="btn btn-outline-secondary rounded-end-pill border-start-0" type="submit">
+                            <button class="btn btn-secondary border-0" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>

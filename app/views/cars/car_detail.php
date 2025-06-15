@@ -147,7 +147,7 @@
         <h2 class="text-center text-white mb-4">
             <i class="bi bi-car-front me-2"></i>Các mẫu xe khác
         </h2>
-        <?php require_once 'car_list.php'; ?>
+        <?php require_once 'list.php'; ?>
     </div>
 
     <!-- Phụ kiện liên quan -->
@@ -156,9 +156,9 @@
     </div>
 
     <div class="bg-info rounded-4 mt-4 p-4">
-        <?php 
-$carLocal = $car;
-require_once 'app/views/reviews/reviews_car.php'; ?>
+        <?php
+        $carLocal = $car;
+        require_once 'app/views/reviews/reviews_car.php'; ?>
     </div>
 </div>
 

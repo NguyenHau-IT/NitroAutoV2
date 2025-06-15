@@ -16,7 +16,7 @@
                 Chào mừng bạn đến <span class="text-warning">Auto</span>
             </h1>
             <p class="lead mb-4">Khám phá xe, tin tức, và nhiều hơn nữa.</p>
-            <a href="#!" class="btn btn-warning btn-lg px-4 py-2 shadow">Bắt đầu ngay</a>
+            <a href="/home" class="btn btn-warning btn-lg px-4 py-2 shadow">Bắt đầu ngay</a>
         </div>
     </div>
 </main>

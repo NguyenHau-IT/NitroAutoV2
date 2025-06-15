@@ -12,11 +12,18 @@
         <?php require_once 'app/views/slice-bar/banner.php'; ?>
 
         <!-- Bộ lọc và ô tìm kiếm -->
-        <?php require_once 'app/views/cars/filter.php'; ?>
+        <div class="row">
+            <!-- Cột bên trái: Bộ lọc -->
+            <div class="col-lg-3">
+                <?php require_once 'app/views/cars/filter.php'; ?>
+            </div>
 
-        <!-- Danh sách xe -->
-        <div id="car-list-container" class="mb-5">
-            <?php require_once 'app/views/cars/car_list.php'; ?>
+            <!-- Cột bên phải: Danh sách xe -->
+            <div class="col-lg-9">
+                <div id="car-list-container" class="mb-5">
+                    <?php require_once 'app/views/cars/car_list.php'; ?>
+                </div>
+            </div>
         </div>
 
         <!-- Xe đã qua sử dụng -->
