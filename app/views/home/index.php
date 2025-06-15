@@ -12,17 +12,19 @@
         <?php require_once 'app/views/slice-bar/banner.php'; ?>
 
         <!-- Bộ lọc và ô tìm kiếm -->
-        <div class="row">
-            <!-- Cột bên trái: Bộ lọc -->
-            <div class="col-lg-3">
-                <?php require_once 'app/views/cars/filter.php'; ?>
-            </div>
+        <section id="danh-sach-xe" class="mb-5">
+            <div class="row">
+                <!-- Cột bên trái: Bộ lọc -->
+                <div class="col-lg-3">
+                    <?php require_once 'app/views/cars/filter.php'; ?>
+                </div>
 
-            <!-- Cột bên phải: Danh sách xe -->
-            <div class="col-lg-9">
-                <?php require_once 'app/views/cars/car_list.php'; ?>
+                <!-- Cột bên phải: Danh sách xe -->
+                <div class="col-lg-9">
+                    <?php require_once 'app/views/cars/car_list.php'; ?>
+                </div>
             </div>
-        </div>
+        </section>
 
         <!-- Xe đã qua sử dụng -->
         <div class="mb-5">

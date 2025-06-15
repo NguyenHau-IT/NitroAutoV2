@@ -27,6 +27,7 @@ class HomeController extends BaseController
     {
         $user_id = $_SESSION['user']['id'] ?? null;
 
+        $result = Cars::count();
         $cars = Cars::all();
         $brands = Brands::getByMostOrders();
         $categories = Categories::getByCar();
