@@ -4,7 +4,6 @@
             <?php foreach ($cars as $index => $car): ?>
                 <div class="col-12 col-lg-6 car-item <?= $index >= 4 ? 'd-none' : '' ?>">
                     <div class="card car-card shadow-lg rounded-3 overflow-hidden d-flex flex-row flex-wrap h-100">
-                        <!-- Ảnh -->
                         <div class="car-img-container" style="flex: 1 1 40%; min-width: 220px;">
                             <a href="/car_detail/<?= htmlspecialchars($car['id']) ?>">
                                 <img loading="lazy"
@@ -15,7 +14,6 @@
                             </a>
                         </div>
 
-                        <!-- Nội dung -->
                         <div class="card-body bg-dark text-light d-flex flex-column justify-content-between" style="flex: 1 1 60%;">
                             <div class="text-center text-lg-start">
                                 <h5 class="card-title fw-bold mb-2" style="min-height: 40px;">
@@ -61,19 +59,18 @@
                     </div>
                 </div>
             <?php endforeach; ?>
-        </div>
 
-        <!-- Xem thêm / Thu gọn -->
-        <?php if (count($cars) > 4): ?>
-            <div class="text-center mt-5 pt-2 d-flex justify-content-center gap-2">
-                <button id="loadMoreCars" class="btn btn-primary d-flex align-items-center">
-                    <i class="bi bi-chevron-down me-1"></i> <span>Xem thêm</span>
-                </button>
-                <button id="collapseCars" class="btn btn-outline-secondary d-none d-flex align-items-center">
-                    <i class="bi bi-chevron-up me-1"></i> <span>Thu gọn</span>
-                </button>
-            </div>
-        <?php endif; ?>
+            <?php if (count($cars) > 4): ?>
+                <div class="text-center mt-5 pt-2 d-flex justify-content-center gap-2 w-100">
+                    <button id="loadMoreCars" class="btn btn-primary d-flex align-items-center">
+                        <i class="bi bi-chevron-down me-1"></i> <span>Xem thêm</span>
+                    </button>
+                    <button id="collapseCars" class="btn btn-outline-secondary d-none d-flex align-items-center">
+                        <i class="bi bi-chevron-up me-1"></i> <span>Thu gọn</span>
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
     <?php else: ?>
         <div class="alert alert-warning text-center" role="alert">
             ⚠️ Không tìm thấy xe nào phù hợp với tiêu chí tìm kiếm của bạn.
@@ -81,23 +78,46 @@
     <?php endif; ?>
 </div>
 
-<!-- Script xử lý hiển thị -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const loadMoreBtn = document.getElementById('loadMoreCars');
-        const collapseBtn = document.getElementById('collapseCars');
-        const carItems = document.querySelectorAll('.car-item');
+    document.addEventListener("DOMContentLoaded", function () {
         const batchSize = 4;
         let visibleCount = batchSize;
 
+        const loadMoreBtn = document.getElementById('loadMoreCars');
+        const collapseBtn = document.getElementById('collapseCars');
+
+        function getCarItems() {
+            return document.querySelectorAll('.car-item');
+        }
+
         function updateVisibility() {
+            const carItems = getCarItems();
             carItems.forEach((item, index) => {
                 item.classList.toggle('d-none', index >= visibleCount);
             });
         }
 
+        function resetAfterFilter() {
+            visibleCount = batchSize;
+            const carItems = getCarItems();
+            carItems.forEach((item, index) => {
+                item.classList.toggle('d-none', index >= batchSize);
+            });
+
+            if (carItems.length > batchSize) {
+                loadMoreBtn?.classList.remove('d-none');
+                collapseBtn?.classList.add('d-none');
+            } else {
+                loadMoreBtn?.classList.add('d-none');
+                collapseBtn?.classList.add('d-none');
+            }
+        }
+
+        window.resetCarListAfterFilter = resetAfterFilter;
+
         if (loadMoreBtn && collapseBtn) {
             loadMoreBtn.addEventListener('click', () => {
+                const carItems = getCarItems();
                 visibleCount += batchSize;
                 if (visibleCount >= carItems.length) {
                     visibleCount = carItems.length;
@@ -113,7 +133,6 @@
                 loadMoreBtn.classList.remove('d-none');
                 collapseBtn.classList.add('d-none');
 
-                // Scroll to top of car list (optional)
                 const firstCar = document.querySelector('.car-item');
                 if (firstCar) {
                     window.scrollTo({
@@ -123,5 +142,7 @@
                 }
             });
         }
+
+        updateVisibility();
     });
 </script>

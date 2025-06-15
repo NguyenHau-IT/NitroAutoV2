@@ -20,9 +20,7 @@
 
             <!-- Cột bên phải: Danh sách xe -->
             <div class="col-lg-9">
-                <div id="car-list-container" class="mb-5">
-                    <?php require_once 'app/views/cars/car_list.php'; ?>
-                </div>
+                <?php require_once 'app/views/cars/car_list.php'; ?>
             </div>
         </div>
 
