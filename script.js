@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const customSwiperEl = document.querySelector(".customBannerSwiper");
     if (customSwiperEl) {
         new Swiper(customSwiperEl, {
-            effect: "slide",
+            effect: "cube",
             loop: true,
             autoplay: {
                 delay: 4000,
@@ -224,4 +224,23 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         });
     }
+
+    const header = document.getElementById("main-header");
+    const placeholder = document.createElement('div');
+    placeholder.className = 'header-placeholder';
+    let isSticky = false;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 150 && !isSticky) {
+            header.classList.add('sticky-header');
+            header.parentNode.insertBefore(placeholder, header.nextSibling);
+            isSticky = true;
+        } else if (window.scrollY <= 150 && isSticky) {
+            header.classList.remove('sticky-header');
+            if (placeholder.parentNode) {
+                placeholder.parentNode.removeChild(placeholder);
+            }
+            isSticky = false;
+        }
+    });
 });

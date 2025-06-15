@@ -5,7 +5,6 @@ html {
 }
 
 body {
-    background-color: #F5F5F5;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -19,7 +18,7 @@ footer {
 }
 
 footer {
-    background-color: #0d6efd;
+    background-color: #000000;
     color: white;
     padding: 1rem 0;
     text-align: center;
@@ -27,14 +26,14 @@ footer {
 }
 
 .bg-nitro-gradient {
-    background: linear-gradient(to bottom, #007bff, rgba(0, 123, 255, 0));
+    background: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
 }
 
 .overlay {
     min-height: 100vh;
     position: relative;
-    -webkit-backdrop-filter: blur(1px); /* Safari support */
-    backdrop-filter: blur(1px); /* tạo hiệu ứng mờ ảnh nền */
+    -webkit-backdrop-filter: blur(2px); /* Safari support */
+    backdrop-filter: blur(2px); /* tạo hiệu ứng mờ ảnh nền */
 }
 
 
@@ -118,6 +117,7 @@ footer {
 .navbar {
     height: 15vh;
 }
+
 .navbar-nav .nav-link {
     transition: all 0.3s ease-in-out;
     border-radius: 5px;
@@ -127,7 +127,7 @@ footer {
     justify-content: center;
     padding: 0.5rem;
     font-size: 0.95rem;
-    color: #212529;
+    color: #ffffff;
 }
 
 .navbar-nav .nav-link span {
@@ -139,7 +139,7 @@ footer {
 
 .navbar-nav .nav-item .nav-link:hover {
     background-color: #007bff;
-    color: white !important;
+    color: rgb(0, 0, 0) !important;
     transform: translateY(-2px);
     box-shadow: 0 0.25rem 0.5rem rgba(0, 123, 255, 0.3);
 }

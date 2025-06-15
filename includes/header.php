@@ -53,12 +53,11 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                     <ul class="navbar-nav me-auto d-flex gap-3 align-items-center">
                         <!-- Logo bên trái -->
 
-                        <li class="nav-item dropdown <?= in_array($current_page, ['home', 'accessories', 'services', 'favorites', 'appointments', 'user_orders', 'test_drive']) ? 'active' : '' ?>">
+                        <li class="nav-item dropdown <?= in_array($current_page, ['accessories', 'services', 'favorites', 'appointments', 'user_orders', 'test_drive']) ? 'active' : '' ?>">
                             <a class="nav-link dropdown-toggle" href="#" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-list"></i><span> Danh mục</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="productDropdown">
-                                <li><a class="dropdown-item" href="/home"><i class="fas fa-car me-2"></i>Danh sách xe</a></li>
                                 <li><a class="dropdown-item" href="/accessories"><i class="fas fa-tools me-2"></i>Phụ Kiện cho xe</a></li>
                                 <li><a class="dropdown-item" href="/services"><i class="fas fa-toolbox me-2"></i>Dịch vụ</a></li>
                                 <li>
@@ -71,9 +70,14 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                             </ul>
                         </li>
 
-                        <li class="nav-item <?= ($current_page == 'OrderForm') ? 'active' : '' ?>">
-                            <a class="nav-link" href="/OrderForm"><i class="fas fa-car"></i><span> Mua hàng</span></a>
+                        <li class="nav-item <?= ($current_page == 'home') ? 'active' : '' ?>">
+                            <a class="nav-link" href="/home"><i class="fas fa-car me-2"></i>Danh sách xe</a>
                         </li>
+                        <?php if ($current_page != ''): ?>
+                            <li class="nav-item <?= ($current_page == 'OrderForm') ? 'active' : '' ?>">
+                                <a class="nav-link" href="/OrderForm"><i class="fas fa-car"></i><span> Mua hàng</span></a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
 
                     <!-- Search form giữa navbar -->
@@ -97,19 +101,21 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                         <?php endif; ?>
 
                         <?php if ($user): ?>
-                            <li class="nav-item <?= ($current_page == 'cart') ? 'active' : '' ?>">
-                                <a class="nav-link" href="/cart">
-                                    <div class="position-relative">
-                                        <i class="fas fa-shopping-cart fa-lg"></i>
-                                        <?php if ($count_cart > 0): ?>
-                                            <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
-                                                <?= $count_cart ?>
-                                            </span>
-                                        <?php endif; ?>
-                                    </div>
-                                    <span>Giỏ hàng</span>
-                                </a>
-                            </li>
+                            <?php if ($current_page != ''): ?>
+                                <li class="nav-item <?= ($current_page == 'cart') ? 'active' : '' ?>">
+                                    <a class="nav-link" href="/cart">
+                                        <div class="position-relative">
+                                            <i class="fas fa-shopping-cart fa-lg"></i>
+                                            <?php if ($count_cart > 0): ?>
+                                                <span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
+                                                    <?= $count_cart ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <span>Giỏ hàng</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                             <li class="nav-item <?= in_array($current_page, ['profile', 'edit_profile']) ? 'active' : '' ?>">
                                 <a class="nav-link" href="/profile">
                                     <i class="fas fa-user"></i> <?= htmlspecialchars($user['full_name']) ?>
