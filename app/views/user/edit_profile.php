@@ -1,8 +1,8 @@
 <?php require_once 'includes/header.php'; ?>
 
-<div class="overlay">
-    <div class="container mt-2 text-dark mb-4 bg-light shadow-lg rounded-4 p-4" style="max-width: 700px;">
-        <div class="card border-0">
+<div class="container py-5 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
             <div class="card-header bg-transparent text-center">
                 <h2><i class="bi bi-pencil-square me-2 text-primary"></i>Chỉnh sửa thông tin</h2>
             </div>
