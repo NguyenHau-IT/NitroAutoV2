@@ -1,7 +1,7 @@
     <?php require_once 'includes/header.php'; ?>
 
     <div class="overlay">
-        <div class="container text-dark mt-2 bg-light text-primary shadow rounded-4 p-4">
+        <div class="container text-dark mt-2 mb-4 bg-light text-primary shadow rounded-4 p-4">
             <h2 class="text-center mb-4"><i class="bi bi-tools me-2"></i>Dịch vụ ô tô</h2>
 
             <div class="row mt-2">

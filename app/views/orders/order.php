@@ -22,13 +22,17 @@
             <div class="mb-3">
                 <label for="address">Địa chỉ nhận xe:</label>
                 <input type="text" class="form-control fs-5" id="address" name="address"
-                    value="<?= htmlspecialchars($user['address']) ?>" required>
+                    placeholder="Nhập địa chỉ nhận xe" required
+                    oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ nhận xe')"
+                    oninput="this.setCustomValidity('')">
             </div>
 
             <div class="mb-3">
                 <label for="phone">Số điện thoại người nhận:</label>
                 <input type="text" class="form-control fs-5" id="phone" name="phone"
-                    value="<?= htmlspecialchars($user['phone']) ?>" required>
+                    placeholder="Nhập số điện thoại người nhận" required
+                    oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại người nhận')"
+                    oninput="this.setCustomValidity('')">
             </div>
 
             <div class="mb-3">
