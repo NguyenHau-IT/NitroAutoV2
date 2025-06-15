@@ -92,6 +92,7 @@
         </div>
     </form>
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const filterForm = document.getElementById("filter-form");
@@ -99,10 +100,11 @@
         const yearSelect = document.getElementById("year-manufacture-select");
         const filterFromCurrentYearBtn = document.getElementById("filter-from-current-year");
 
-        // Gửi lọc bằng AJAX
+        // Gửi form lọc bằng AJAX
         filterForm?.addEventListener("submit", function(event) {
             event.preventDefault();
             const formData = new FormData(filterForm);
+
             fetch("/filter-cars", {
                     method: "POST",
                     body: formData
@@ -111,30 +113,56 @@
                 .then(data => {
                     const carList = document.getElementById("car-list-container");
                     if (carList) carList.innerHTML = data;
+
+                    // ✅ Gọi lại JS xử lý xem thêm sau khi render danh sách mới
+                    if (typeof window.resetCarListAfterFilter === 'function') {
+                        window.resetCarListAfterFilter();
+                    }
                 })
                 .catch(error => {
-                    console.error("Lỗi khi tải dữ liệu:", error);
+                    console.error("Lỗi khi lọc:", error);
                     alert("Không thể tải dữ liệu. Vui lòng thử lại.");
                 });
         });
 
-        // Reset => tự động gửi lại
-        filterForm?.addEventListener("reset", () => {
-            setTimeout(() => {
+        // Reset filter bằng nút → gọi API /reset-filter
+        resetBtn?.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            const carList = document.getElementById("car-list-container");
+            if (carList) carList.innerHTML = "<div class='text-center py-5'>Đang tải...</div>";
+
+            fetch("/reset-filter", {
+                    method: "POST"
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (carList) {
+                        carList.innerHTML = data; // ✅ chỉ gán lại danh sách
+                    }
+
+                    if (typeof window.resetCarListAfterFilter === 'function') {
+                        window.resetCarListAfterFilter();
+                    }
+
+                    filterForm?.reset(); // ✅ reset các ô chọn
+                })
+                .catch(error => {
+                    console.error("Lỗi khi reset:", error);
+                    alert("Không thể reset. Vui lòng thử lại.");
+                });
+        });
+
+        // Nút chọn "Mới" (năm hiện tại)
+        filterFromCurrentYearBtn?.addEventListener("click", () => {
+            const currentYear = new Date().getFullYear();
+            if (yearSelect) {
+                yearSelect.value = currentYear.toString();
                 filterForm.dispatchEvent(new Event("submit", {
                     bubbles: true,
                     cancelable: true
                 }));
-            }, 0);
-        });
-
-        // Lọc theo năm hiện tại
-        filterFromCurrentYearBtn?.addEventListener("click", () => {
-            if (yearSelect) yearSelect.value = new Date().getFullYear();
-            filterForm?.dispatchEvent(new Event("submit", {
-                bubbles: true,
-                cancelable: true
-            }));
+            }
         });
     });
 </script>

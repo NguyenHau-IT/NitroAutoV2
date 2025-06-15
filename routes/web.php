@@ -137,7 +137,7 @@ switch (true) {
         (new CarController())->filterCar();
         break;
 
-    case $uri === 'reset-filters':
+    case $uri === 'reset-filter':
         (new CarController())->resetFilters();
         break;
 

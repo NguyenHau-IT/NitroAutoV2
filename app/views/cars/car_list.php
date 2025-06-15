@@ -79,59 +79,47 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
+        // Khởi động lần đầu
+        if (typeof window.resetCarListAfterFilter === 'function') {
+            window.resetCarListAfterFilter();
+        }
+    });
+
+    // ✅ Định nghĩa lại hàm này sau khi innerHTML thay đổi
+    window.resetCarListAfterFilter = function() {
         const batchSize = 4;
         let visibleCount = batchSize;
 
         const loadMoreBtn = document.getElementById('loadMoreCars');
         const collapseBtn = document.getElementById('collapseCars');
+        const getCarItems = () => document.querySelectorAll('.car-item');
 
-        function getCarItems() {
-            return document.querySelectorAll('.car-item');
-        }
-
-        function updateVisibility() {
+        const updateVisibility = () => {
             const carItems = getCarItems();
             carItems.forEach((item, index) => {
                 item.classList.toggle('d-none', index >= visibleCount);
             });
-        }
 
-        function resetAfterFilter() {
-            visibleCount = batchSize;
-            const carItems = getCarItems();
-            carItems.forEach((item, index) => {
-                item.classList.toggle('d-none', index >= batchSize);
-            });
-
-            if (carItems.length > batchSize) {
-                loadMoreBtn?.classList.remove('d-none');
-                collapseBtn?.classList.add('d-none');
-            } else {
+            if (visibleCount >= carItems.length) {
                 loadMoreBtn?.classList.add('d-none');
-                collapseBtn?.classList.add('d-none');
+            } else {
+                loadMoreBtn?.classList.remove('d-none');
             }
-        }
 
-        window.resetCarListAfterFilter = resetAfterFilter;
+            collapseBtn?.classList.toggle('d-none', visibleCount <= batchSize);
+        };
 
+        // Gắn lại sự kiện (vì nút mới render lại nên phải gắn lại)
         if (loadMoreBtn && collapseBtn) {
-            loadMoreBtn.addEventListener('click', () => {
-                const carItems = getCarItems();
+            loadMoreBtn.onclick = () => {
                 visibleCount += batchSize;
-                if (visibleCount >= carItems.length) {
-                    visibleCount = carItems.length;
-                    loadMoreBtn.classList.add('d-none');
-                }
                 updateVisibility();
-                collapseBtn.classList.remove('d-none');
-            });
+            };
 
-            collapseBtn.addEventListener('click', () => {
+            collapseBtn.onclick = () => {
                 visibleCount = batchSize;
                 updateVisibility();
-                loadMoreBtn.classList.remove('d-none');
-                collapseBtn.classList.add('d-none');
 
                 const firstCar = document.querySelector('.car-item');
                 if (firstCar) {
@@ -140,9 +128,10 @@
                         behavior: 'smooth'
                     });
                 }
-            });
+            };
         }
 
+        // Hiển thị ban đầu
         updateVisibility();
-    });
+    };
 </script>
