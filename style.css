@@ -304,7 +304,7 @@ footer {
 /* ===== RESPONSIVE ===== */
 @media (min-width: 992px) {
     .swiper{
-        height: 40rem;
+        height: 41rem;
     }
 }
 

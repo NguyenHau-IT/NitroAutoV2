@@ -2,7 +2,7 @@
     <?php if (!empty($cars)): ?>
         <div class="row g-4" id="car-list-container">
             <?php foreach ($cars as $index => $car): ?>
-                <div class="col-12 col-lg-6 car-item <?= $index >= 8 ? 'd-none' : '' ?>">
+                <div class="col-12 col-lg-6 car-item <?= $index >= 4 ? 'd-none' : '' ?>">
                     <div class="card car-card shadow-lg rounded-3 overflow-hidden d-flex flex-row flex-wrap h-100">
                         <!-- Ảnh -->
                         <div class="car-img-container" style="flex: 1 1 40%; min-width: 220px;">
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Xem thêm / Thu gọn -->
-        <?php if (count($cars) > 8): ?>
+        <?php if (count($cars) > 4): ?>
             <div class="text-center mt-5 pt-2 d-flex justify-content-center gap-2">
                 <button id="loadMoreCars" class="btn btn-primary d-flex align-items-center">
                     <i class="bi bi-chevron-down me-1"></i> <span>Xem thêm</span>
@@ -87,7 +87,7 @@
         const loadMoreBtn = document.getElementById('loadMoreCars');
         const collapseBtn = document.getElementById('collapseCars');
         const carItems = document.querySelectorAll('.car-item');
-        const batchSize = 8;
+        const batchSize = 4;
         let visibleCount = batchSize;
 
         function updateVisibility() {
