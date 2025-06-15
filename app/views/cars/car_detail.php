@@ -104,21 +104,13 @@
             </button>
         </form>
 
-        <?php if ($favorites): ?>
-            <form action="/remove_favorite" method="POST">
-                <input type="hidden" name="car_id" value="<?= htmlspecialchars($car['id']) ?>">
-                <button type="submit" class="btn btn-secondary btn-lg">
-                    <i class="bi bi-heartbreak-fill"></i> Bỏ yêu thích
-                </button>
-            </form>
-        <?php else: ?>
-            <form action="/add_favorite" method="POST">
-                <input type="hidden" name="car_id" value="<?= htmlspecialchars($car['id']) ?>">
-                <button type="submit" class="btn btn-danger btn-lg">
-                    <i class="bi bi-heart-fill"></i> Yêu thích
-                </button>
-            </form>
-        <?php endif; ?>
+        <!-- Nút yêu thích bằng AJAX -->
+        <div id="favorite-toggle" data-car-id="<?= htmlspecialchars($car['id']) ?>" data-favorited="<?= $favorites ? '1' : '0' ?>">
+            <button type="button" class="btn btn-lg <?= $favorites ? 'btn-secondary' : 'btn-danger' ?>" id="favorite-btn">
+                <i class="bi <?= $favorites ? 'bi-heartbreak-fill' : 'bi-heart-fill' ?>"></i>
+                <span><?= $favorites ? 'Bỏ yêu thích' : 'Yêu thích' ?></span>
+            </button>
+        </div>
 
         <?php if ($car['stock'] > 0): ?>
             <form action="/OrderForm" method="POST">
@@ -163,3 +155,43 @@
 </div>
 
 <?php require_once  'includes/footer.php'; ?>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const favToggle = document.getElementById("favorite-toggle");
+
+    if (!favToggle) return;
+
+    const button = document.getElementById("favorite-btn");
+    const carId = favToggle.dataset.carId;
+    let isFavorited = favToggle.dataset.favorited === '1';
+
+    button?.addEventListener("click", function () {
+        const url = isFavorited ? "/remove_favorite" : "/add_favorite";
+        const formData = new FormData();
+        formData.append("car_id", carId);
+
+        fetch(url, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Không thể cập nhật trạng thái yêu thích.");
+            return response.text();
+        })
+        .then(() => {
+            isFavorited = !isFavorited;
+            favToggle.dataset.favorited = isFavorited ? '1' : '0';
+
+            // Cập nhật giao diện nút
+            button.classList.toggle("btn-danger", !isFavorited);
+            button.classList.toggle("btn-secondary", isFavorited);
+            button.querySelector("i").className = isFavorited ? "bi bi-heartbreak-fill" : "bi bi-heart-fill";
+            button.querySelector("span").textContent = isFavorited ? "Bỏ yêu thích" : "Yêu thích";
+        })
+        .catch(error => {
+            console.error("Lỗi:", error);
+            alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+        });
+    });
+});
+</script>
