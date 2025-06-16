@@ -73,11 +73,6 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                         <li class="nav-item <?= ($current_page == 'home') ? 'active' : '' ?>">
                             <a class="nav-link" href="/home"><i class="fas fa-car me-2"></i>Danh sách xe</a>
                         </li>
-                        <?php if ($current_page != ''): ?>
-                            <li class="nav-item <?= ($current_page == 'OrderForm') ? 'active' : '' ?>">
-                                <a class="nav-link" href="/OrderForm"><i class="fas fa-car"></i><span> Mua hàng</span></a>
-                            </li>
-                        <?php endif; ?>
                     </ul>
 
                     <!-- Search form giữa navbar -->

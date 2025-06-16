@@ -1,26 +1,62 @@
 <?php require_once 'includes/header.php'; ?>
 
+<style>
+    .form-check-input:hover {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        cursor: pointer;
+    }
+
+    .out-of-stock-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        font-size: 2rem;
+        z-index: 10;
+        border-radius: 0.5rem;
+        text-transform: uppercase;
+    }
+</style>
+
 <div class="overlay">
-    <div class="container mt-2 mb-5 bg-light  text-primary  rounded-4 shadow-lg p-4">
+    <div class="container mt-2 mb-5 bg-light text-primary rounded-4 shadow-lg p-4">
         <h2 class="mb-4 text-center fs-1">Giỏ hàng</h2>
 
         <form method="post" action="/checkout_selected">
             <?php if (!empty($carts)): ?>
                 <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="select-all">
+                    <input class="form-check-input border-1 border-dark" type="checkbox" id="select-all">
                     <label class="form-check-label fs-5" for="select-all">
                         Chọn tất cả
                     </label>
                 </div>
 
                 <div class="row g-4">
-                    <?php foreach ($carts as $item): ?>
+                    <?php foreach ($carts as $item):
+                        $isOutOfStock = $item['accessory_stock'] == 0 || !$item['accessory_status'];
+                    ?>
                         <div class="col-md-6 col-lg-4">
-                            <div class="card h-100 shadow-sm">
+                            <div class="card h-100 shadow-sm position-relative <?= $isOutOfStock ? 'opacity-50' : '' ?>">
+
+                                <?php if ($isOutOfStock): ?>
+                                    <div class="out-of-stock-overlay">HẾT HÀNG</div>
+                                <?php endif; ?>
+
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div class="form-check">
-                                            <input class="form-check-input select-item" type="checkbox" name="selected_items[]" value="<?= $item['id'] ?>">
+                                            <input class="form-check-input select-item border-1 border-dark"
+                                                type="checkbox"
+                                                name="selected_items[]"
+                                                value="<?= $item['id'] ?>"
+                                                <?= $isOutOfStock ? 'disabled' : '' ?>>
                                         </div>
                                         <a href="/delete_cart/<?= $item['accessory_id'] ?>" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i>
@@ -28,7 +64,9 @@
                                     </div>
 
                                     <h5 class="card-title fw-bold"><?= htmlspecialchars($item['accessory_name']) ?></h5>
-                                    <p class="card-text text-primary fs-5"><?= number_format($item['accessory_price'], 0, ',', '.') ?> VNĐ</p>
+                                    <p class="card-text text-primary fs-5">
+                                        <?= number_format($item['accessory_price'], 0, ',', '.') ?> VNĐ
+                                    </p>
 
                                     <div class="mb-2">
                                         <label class="form-label">Số lượng:</label>
@@ -37,7 +75,8 @@
                                             value="<?= $item['quantity'] ?>"
                                             min="1"
                                             class="form-control text-center quantity-input"
-                                            data-price="<?= $item['accessory_price'] ?>">
+                                            data-price="<?= $item['accessory_price'] ?>"
+                                            <?= $isOutOfStock ? 'disabled' : '' ?>>
                                     </div>
 
                                     <p class="text-success fw-bold mb-0">
@@ -73,5 +112,13 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Checkbox "Chọn tất cả"
+    document.getElementById('select-all')?.addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.select-item:not(:disabled)');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
 
 <?php require_once 'includes/footer.php'; ?>

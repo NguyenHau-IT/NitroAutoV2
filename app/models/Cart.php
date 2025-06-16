@@ -29,9 +29,9 @@ class Cart
     {
         global $conn;
         $stmt = $conn->prepare("
-        SELECT cart.*, accessories.name AS accessory_name, accessories.price AS accessory_price, users.full_name AS user_name
-        FROM cart 
-        JOIN accessories ON cart.accessory_id = accessories.id
+        SELECT cart.*, ac.name AS accessory_name, ac.price AS accessory_price, users.full_name AS user_name, ac.stock AS accessory_stock, ac.status AS accessory_status
+        FROM cart
+        JOIN accessories ac ON cart.accessory_id = ac.id
         JOIN users ON cart.user_id = users.id
         WHERE cart.user_id = :user_id
     ");

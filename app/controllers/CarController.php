@@ -176,7 +176,7 @@ class CarController extends BaseController
         global $conn;
         $car = Cars::find($id);
         $car_id = $id;
-        $stmt2 = $conn->prepare("SELECT image_url, image_type FROM car_images WHERE car_id = :id AND image_type = '3D'");
+        $stmt2 = $conn->prepare("SELECT image_url, image_type FROM car_images WHERE car_id = :id");
         $stmt2->execute([':id' => $id]);
         $images = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         $carByBrand = Cars::findByBrand($car['brand_id']);
