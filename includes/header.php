@@ -52,6 +52,9 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto d-flex gap-3 align-items-center">
                         <!-- Logo bên trái -->
+                        <li class="nav-item <?= ($current_page == 'home') ? 'active' : '' ?>">
+                            <a class="nav-link" href="/home"><i class="fas fa-car me-2"></i>Danh sách xe</a>
+                        </li>
 
                         <li class="nav-item dropdown <?= in_array($current_page, ['accessories', 'services', 'favorites', 'appointments', 'user_orders', 'test_drive']) ? 'active' : '' ?>">
                             <a class="nav-link dropdown-toggle" href="#" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,10 +71,6 @@ $count_cart = Cart::getCartCount($user_id ?? null);
                                 <li><a class="dropdown-item" href="/user_orders"><i class="fas fa-history me-2"></i>Lịch sử</a></li>
                                 <li><a class="dropdown-item" href="/test_drive"><i class="fas fa-car-side me-2"></i>Lái thử</a></li>
                             </ul>
-                        </li>
-
-                        <li class="nav-item <?= ($current_page == 'home') ? 'active' : '' ?>">
-                            <a class="nav-link" href="/home"><i class="fas fa-car me-2"></i>Danh sách xe</a>
                         </li>
                     </ul>
 
