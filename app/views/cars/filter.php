@@ -113,16 +113,9 @@
                 .then(data => {
                     const carList = document.getElementById("car-list-container");
                     if (carList) carList.innerHTML = data;
-
-                    // ✅ Gọi lại JS xử lý xem thêm sau khi render danh sách mới
-                    if (typeof window.resetCarListAfterFilter === 'function') {
-                        window.resetCarListAfterFilter();
-                    }
+                    if (filterDropdown) filterDropdown.classList.remove("show");
                 })
-                .catch(error => {
-                    console.error("Lỗi khi lọc:", error);
-                    alert("Không thể tải dữ liệu. Vui lòng thử lại.");
-                });
+                .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
         });
 
         // Reset filter bằng nút → gọi API /reset-filter
@@ -137,20 +130,11 @@
                 })
                 .then(response => response.text())
                 .then(data => {
-                    if (carList) {
-                        carList.innerHTML = data; // ✅ chỉ gán lại danh sách
-                    }
-
-                    if (typeof window.resetCarListAfterFilter === 'function') {
-                        window.resetCarListAfterFilter();
-                    }
-
-                    filterForm?.reset(); // ✅ reset các ô chọn
+                    const carList = document.getElementById("car-list-container");
+                    if (carList) carList.innerHTML = data;
+                    if (filterDropdown) filterDropdown.classList.remove("show");
                 })
-                .catch(error => {
-                    console.error("Lỗi khi reset:", error);
-                    alert("Không thể reset. Vui lòng thử lại.");
-                });
+                .catch(error => console.error("Lỗi khi tải dữ liệu:", error));
         });
 
         // Nút chọn "Mới" (năm hiện tại)

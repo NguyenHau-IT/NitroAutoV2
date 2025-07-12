@@ -20,7 +20,7 @@
                 </div>
 
                 <!-- Cột bên phải: Danh sách xe -->
-                <div class="col-lg-9">
+                <div class="col-lg-9" id="car-list-container">
                     <?php require_once 'app/views/cars/car_list.php'; ?>
                 </div>
             </div>

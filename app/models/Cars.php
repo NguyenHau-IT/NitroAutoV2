@@ -47,10 +47,10 @@ class Cars
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-public static function allbystock()
-{
-    global $conn;
-    $stmt = $conn->query("SELECT cars.id, cars.name, cars.price, cars.year, cars.mileage, 
+    public static function allbystock()
+    {
+        global $conn;
+        $stmt = $conn->query("SELECT cars.id, cars.name, cars.price, cars.year, cars.mileage, 
                                  cars.fuel_type, cars.transmission, cars.color, 
                                  categories.name AS category_name, brands.name AS brand_name, 
                                  cars.description, cars.stock, cars.created_at,
@@ -65,8 +65,8 @@ public static function allbystock()
                           LEFT JOIN car_images AS three_d_images 
                                ON cars.id = three_d_images.car_id AND three_d_images.image_type = '3D'
                           WHERE cars.stock > 0");
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public static function find($id)
     {
@@ -128,7 +128,7 @@ public static function allbystock()
     public static function findByBrand($id)
     {
         global $conn;
-    
+
         $stmt = $conn->prepare("SELECT cars.id, cars.name, cars.price, cars.year, cars.mileage, 
                                        cars.fuel_type, cars.transmission, cars.color, 
                                        categories.name AS category_name, brands.name AS brand_name, 
@@ -146,7 +146,7 @@ public static function allbystock()
                                 WHERE cars.brand_id = :brand_id");
         $stmt->execute(['brand_id' => $id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }    
+    }
 
     public static function findByCategory($id, $excludeCarId = null)
     {
@@ -186,28 +186,28 @@ public static function allbystock()
     }
 
     public static function update(
-    $id,
-    $name,
-    $brand_id,
-    $category_id,
-    $price,
-    $year,
-    $mileage,
-    $fuel_type,
-    $transmission,
-    $color,
-    $stock,
-    $horsepower,
-    $description,
-    $created_at,
-    $image_url,
-    $image_url3D
-) {
-    global $conn;
-    try {
-        $conn->beginTransaction();
+        $id,
+        $name,
+        $brand_id,
+        $category_id,
+        $price,
+        $year,
+        $mileage,
+        $fuel_type,
+        $transmission,
+        $color,
+        $stock,
+        $horsepower,
+        $description,
+        $created_at,
+        $image_url,
+        $image_url3D
+    ) {
+        global $conn;
+        try {
+            $conn->beginTransaction();
 
-        $stmt = $conn->prepare("UPDATE cars 
+            $stmt = $conn->prepare("UPDATE cars 
             SET name = :name, 
                 brand_id = :brand_id, 
                 category_id = :category_id, 
@@ -223,61 +223,61 @@ public static function allbystock()
                 created_at = :created_at 
             WHERE id = :id");
 
-        $stmt->execute([
-            "id" => $id,
-            "name" => $name,
-            "brand_id" => $brand_id,
-            "category_id" => $category_id,
-            "price" => $price,
-            "year" => $year,
-            "mileage" => $mileage,
-            "fuel_type" => $fuel_type,
-            "transmission" => $transmission,
-            "color" => $color,
-            "stock" => $stock,
-            "horsepower" => $horsepower,
-            "description" => $description,
-            "created_at" => $created_at
-        ]);
+            $stmt->execute([
+                "id" => $id,
+                "name" => $name,
+                "brand_id" => $brand_id,
+                "category_id" => $category_id,
+                "price" => $price,
+                "year" => $year,
+                "mileage" => $mileage,
+                "fuel_type" => $fuel_type,
+                "transmission" => $transmission,
+                "color" => $color,
+                "stock" => $stock,
+                "horsepower" => $horsepower,
+                "description" => $description,
+                "created_at" => $created_at
+            ]);
 
-        // NORMAL IMAGE
-        $stmt = $conn->prepare("SELECT id FROM car_images WHERE car_id = :car_id AND image_type = 'normal'");
-        $stmt->execute(["car_id" => $id]);
-        $exists = $stmt->fetch();
+            // NORMAL IMAGE
+            $stmt = $conn->prepare("SELECT id FROM car_images WHERE car_id = :car_id AND image_type = 'normal'");
+            $stmt->execute(["car_id" => $id]);
+            $exists = $stmt->fetch();
 
-        if ($exists) {
-            $stmt = $conn->prepare("UPDATE car_images SET image_url = :image_url WHERE car_id = :car_id AND image_type = 'normal'");
-        } else {
-            $stmt = $conn->prepare("INSERT INTO car_images (car_id, image_url, image_type) VALUES (:car_id, :image_url, 'normal')");
+            if ($exists) {
+                $stmt = $conn->prepare("UPDATE car_images SET image_url = :image_url WHERE car_id = :car_id AND image_type = 'normal'");
+            } else {
+                $stmt = $conn->prepare("INSERT INTO car_images (car_id, image_url, image_type) VALUES (:car_id, :image_url, 'normal')");
+            }
+            $stmt->execute([
+                "car_id" => $id,
+                "image_url" => $image_url
+            ]);
+
+            // 3D IMAGE
+            $stmt = $conn->prepare("SELECT id FROM car_images WHERE car_id = :car_id AND image_type = '3D'");
+            $stmt->execute(["car_id" => $id]);
+            $exists3D = $stmt->fetch();
+
+            if ($exists3D) {
+                $stmt = $conn->prepare("UPDATE car_images SET image_url = :image_url WHERE car_id = :car_id AND image_type = '3D'");
+            } else {
+                $stmt = $conn->prepare("INSERT INTO car_images (car_id, image_url, image_type) VALUES (:car_id, :image_url, '3D')");
+            }
+            $stmt->execute([
+                "car_id" => $id,
+                "image_url" => $image_url3D
+            ]);
+
+            $conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $conn->rollBack();
+            error_log($e->getMessage());
+            return false;
         }
-        $stmt->execute([
-            "car_id" => $id,
-            "image_url" => $image_url
-        ]);
-
-        // 3D IMAGE
-        $stmt = $conn->prepare("SELECT id FROM car_images WHERE car_id = :car_id AND image_type = '3D'");
-        $stmt->execute(["car_id" => $id]);
-        $exists3D = $stmt->fetch();
-
-        if ($exists3D) {
-            $stmt = $conn->prepare("UPDATE car_images SET image_url = :image_url WHERE car_id = :car_id AND image_type = '3D'");
-        } else {
-            $stmt = $conn->prepare("INSERT INTO car_images (car_id, image_url, image_type) VALUES (:car_id, :image_url, '3D')");
-        }
-        $stmt->execute([
-            "car_id" => $id,
-            "image_url" => $image_url3D
-        ]);
-
-        $conn->commit();
-        return true;
-    } catch (Exception $e) {
-        $conn->rollBack();
-        error_log($e->getMessage());
-        return false;
     }
-}
 
     public static function addCar($data)
     {
@@ -337,7 +337,7 @@ public static function allbystock()
         $stmt = $conn->query("SELECT COUNT(*) as count FROM cars");
         return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
     }
-    
+
     public static function topSelling()
     {
         global $conn;
@@ -354,7 +354,7 @@ public static function allbystock()
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
 
     public static function topRated()
     {

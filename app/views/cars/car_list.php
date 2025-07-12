@@ -1,6 +1,6 @@
 <div class="mt-4 bg-light rounded-4 shadow p-4 border z-0">
     <?php if (!empty($cars)): ?>
-        <div class="row g-4" id="car-list-container">
+        <div class="row g-4">
             <?php foreach ($cars as $index => $car): ?>
                 <div class="col-12 col-lg-6 car-item <?= $index >= 4 ? 'd-none' : '' ?>">
                     <div class="card car-card shadow-lg rounded-3 overflow-hidden d-flex flex-row flex-wrap h-100">

@@ -1,8 +1,8 @@
 <?php
-$serverName = "SQL1003.site4now.net";
-$database = "db_ab8bdc_carsale";
-$username = "db_ab8bdc_carsale_admin";
-$password = "Admin123";
+$serverName = "10.244.54.185,1433";
+$database = "carsale";
+$username = "hau";
+$password = "haunvh";
 
 try {
     $conn = new PDO(

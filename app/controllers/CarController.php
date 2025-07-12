@@ -113,9 +113,10 @@ class CarController extends BaseController
                 exit();
             }
 
+            $name = $_POST["id"] . "_" . $_POST["name"];
             $image_url = $car['normal_image_url'];
             if (!empty($_FILES['image_url']['name'])) {
-                $newName = preg_replace('/[^a-zA-Z0-9-_]/', '', $_POST['name']);
+                $newName = preg_replace('/[^a-zA-Z0-9-_]/', '', $name);
                 $result = ImageHelper::processImage($_FILES['image_url'], $newName);
                 if (isset($result['error'])) {
                     header("Location: /admindashbroad?status=error&message=" . urlencode($result['error']) . "#cars");
