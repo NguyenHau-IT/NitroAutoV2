@@ -43,7 +43,8 @@ class Cars
                                 LEFT JOIN car_images AS normal_images 
                                      ON cars.id = normal_images.car_id AND normal_images.image_type = 'normal'
                                 LEFT JOIN car_images AS three_d_images 
-                                     ON cars.id = three_d_images.car_id AND three_d_images.image_type = '3D'");
+                                     ON cars.id = three_d_images.car_id AND three_d_images.image_type = '3D'
+                                ORDER BY cars.year DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
