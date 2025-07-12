@@ -140,7 +140,7 @@ class AuthController extends BaseController
             if (!$user) {
                 $password = '123456nvh@Aa';
                 $phone = '0' . str_pad(random_int(0, 999999999), 9, '0', STR_PAD_LEFT);
-                $address = 'null';
+                $address = '';
                 $gender = 'male';
 
                 $newUserId = Users::register($userInfo->name, $userInfo->email, $password, $phone, $address, $gender);
